@@ -23,16 +23,18 @@ public class CusAuthenticationProvider
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
+
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String userName = authentication.getName();// 这个获取表单输入中返回的用户名;
         String password = (String) authentication.getCredentials();// 这个是表单中输入的密码；
+        System.out.println("CusAuthenticationProvider------>"+userName+"---"+password);
         // 这里构建来判断用户是否存在和密码是否正确
         User userInfo = (User) userDetailsService.loadUserByUsername(userName); // 这里调用我们的自己写的获取用户的方法；
         if (userInfo == null) {
             throw new BadCredentialsException("用户名不存在");
         }
-        if  (!passwordEncoder.matches(password,userInfo.getPassword())) {
+        if (!passwordEncoder.matches(password, userInfo.getPassword())) {
             throw new BadCredentialsException("密码不正确");
         }
         Collection<? extends GrantedAuthority> authorities = userInfo.getAuthorities();

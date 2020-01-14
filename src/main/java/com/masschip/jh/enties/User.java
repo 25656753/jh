@@ -30,10 +30,12 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(generator = "uuidgenerator")
     @GenericGenerator(name = "uuidgenerator",strategy = "uuid")
+    @Length(max = 64)
     private String userid;
     @Column(nullable = false)
     @Length(max = 64)
     private String username;
+    @Length(max = 64)
     private String password;
     @Column(nullable = false)
     @Length(max = 64)
@@ -48,13 +50,17 @@ public class User implements UserDetails {
             inverseJoinColumns = {@JoinColumn(name="roleid",referencedColumnName ="roleid" ) })
     private Set<Role> roles;
 
+    @Length(max = 28)
     private String email;
+    @Length(max = 20)
     private String userface;
     private Timestamp regTime;
+    @Length(max = 500)
     private String ps;
     private Boolean issuper=false;
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinColumn(name = "create_by")
+    @Length(max = 64)
     private User create_by;
 
     @JsonFormat(pattern="yyyy-MM-dd",timezone="GMT+8")
@@ -64,6 +70,7 @@ public class User implements UserDetails {
 
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinColumn(name = "update_by")
+    @Length(max = 64)
     private User update_by;
 
     @JsonFormat(pattern="yyyy-MM-dd",timezone="GMT+8")

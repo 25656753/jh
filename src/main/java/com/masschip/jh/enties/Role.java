@@ -21,12 +21,13 @@ public class Role {
     @Id
     @GeneratedValue(generator = "uuidgenerator")
     @GenericGenerator(name = "uuidgenerator", strategy = "uuid")
+    @Length(max = 64)
     private String roleid;
     @NotBlank
     @Length(max = 64)
     private String rolename;
 
-
+    @Length(max = 200)
     private String ps;
 
 
@@ -40,6 +41,7 @@ public class Role {
 
    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinColumn(name = "create_by")
+   @Length(max = 64)
     private User create_by;
 
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
@@ -49,6 +51,7 @@ public class Role {
 
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinColumn(name = "update_by")
+    @Length(max = 64)
     private User update_by;
 
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")

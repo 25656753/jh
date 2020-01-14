@@ -3,13 +3,18 @@ package com.masschip.jh.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -17,36 +22,26 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private AuthenticationProvider provider;
-/*    @Override
+
+    @Autowired
+    private AuthenticationSuccessHandler cusAuthenticationSuccessHandler;
+    @Autowired
+    private AuthenticationFailureHandler cusAuthenticationFailHander;
+
+
+    @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .antMatchers(HttpMethod.GET).permitAll()
-                .antMatchers(HttpMethod.POST).permitAll()
-                .antMatchers("/api/**").permitAll();
+        http
+                .formLogin().loginPage("/login").loginProcessingUrl("/login/form")
+                .successHandler(cusAuthenticationSuccessHandler)
+                .failureHandler(cusAuthenticationFailHander)
+                .permitAll()  //表单登录，permitAll()表示这个不需要验证 登录页面，登录失败页面
+                .and()
+                .authorizeRequests().anyRequest().authenticated()
+                .and()
+                .csrf().disable();
 
-        http.formLogin().loginPage("/login")
-                .loginProcessingUrl("/form")
-                .defaultSuccessUrl("/index") //成功登陆后跳转页面
-                .failureUrl("/loginError").permitAll();
-
-        http.logout().logoutUrl("/api/session/logout")
-                // 登出前调用，可用于日志
-                .addLogoutHandler(customLogoutHandler)
-                // 登出后调用，用户信息已不存在
-                .logoutSuccessHandler(customLogoutHandler);
-
-        http.exceptionHandling()
-                // 已登入用户的权限错误
-                .accessDeniedHandler(customAccessDeniedHandler)
-                // 未登入用户的权限错误
-                .authenticationEntryPoint(customAccessDeniedHandler);
-
-        http.csrf().disable();
-
-        http.addFilterAt(customAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
-
-
-    }*/
+    }
 
 
     @Bean
@@ -55,7 +50,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
-    @Autowired
+  /*  @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication()
                 .withUser("root")
@@ -63,5 +58,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .roles("USER");
 
 
-    }
+    }*/
 }
