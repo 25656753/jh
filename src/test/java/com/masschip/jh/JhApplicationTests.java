@@ -1,7 +1,7 @@
 package com.masschip.jh;
 
-import com.masschip.jh.dao.RoleRepository;
-import com.masschip.jh.dao.UserRepository;
+import com.masschip.jh.dao.Roledao;
+import com.masschip.jh.dao.Userdao;
 import com.masschip.jh.enties.Role;
 import com.masschip.jh.enties.User;
 import org.junit.jupiter.api.Test;
@@ -10,15 +10,16 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @SpringBootTest
 class JhApplicationTests {
     @Autowired
-    private UserRepository userdao;
+    private Userdao userdao;
 
     @Autowired
-    private RoleRepository roledao;
+    private Roledao roledao;
 
     @Test
     void contextLoads() {
@@ -58,5 +59,14 @@ class JhApplicationTests {
     void t2() {
     Role t=    roledao.findById("402883346f9e406c016f9e40a6da0001").get();
     System.out.println(t.getUsers().size()+"=====");
+    }
+
+
+    @Test
+    void t3() {
+        List<User> t=  userdao.findByUsername("jamhe");
+        Set<Role> roles=t.get(0).getRoles();
+
+        System.out.println(roles.stream().findFirst().get().getRolename()+"=====");
     }
 }
