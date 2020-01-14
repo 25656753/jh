@@ -1,12 +1,12 @@
 spring:
   datasource:
     druid:
-      driver-class-name: com.mysql.jdbc.Driver
-      url:  jdbc:mysql://localhost:3306/a1?useUnicode=true&characterEncoding=utf8
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url:  jdbc:mysql://localhost:3306/a1?useUnicode=true&characterEncoding=utf8&allowMultiQueries=true&serverTimezone=UTC
       username: pcteam
       password: pcteam11
       initial-size: 2
-      max-active: 20
+      max-active: 40
       min-idle: 5
   jpa:
     hibernate:
