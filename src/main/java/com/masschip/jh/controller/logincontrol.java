@@ -4,6 +4,7 @@ import com.masschip.jh.security.testlombok;
 import com.masschip.jh.dao.Roledao;
 import com.masschip.jh.dao.Userdao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +24,7 @@ public class logincontrol {
         testlombok tt=testlombok.of(32);
         map.put("tt", 8548);
          System.out.println("------>"+userdao.count());
+       System.out.println("---------->"+SecurityContextHolder.getContext().getAuthentication().getPrincipal());
         return "index";
     }
 }

@@ -7,6 +7,7 @@ import com.masschip.jh.enties.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -66,7 +67,19 @@ class JhApplicationTests {
     void t3() {
         List<User> t=  userdao.findByUsername("jamhe");
         Set<Role> roles=t.get(0).getRoles();
-
         System.out.println(roles.stream().findFirst().get().getRolename()+"=====");
     }
-}
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
+    @Test
+    void t4()
+    {
+      System.out.println("password========"+passwordEncoder.encode("123456"));
+
+      if  (passwordEncoder.matches("1234567","$2a$10$ggetqngmAtvkW2e3.NnyG.YZcRVkNAhXiUQQPUUOcCecNDh/nUME.")) {
+          System.out.println("password ok------");
+      }
+    }
+    }
+
+

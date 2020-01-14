@@ -52,7 +52,7 @@ public class User implements UserDetails {
     private String userface;
     private Timestamp regTime;
     private String ps;
-
+    private Boolean issuper=false;
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinColumn(name = "create_by")
     private User create_by;
