@@ -41,4 +41,6 @@ public class logincontrol {
         System.out.println(username+password+"-----");
         return "login/login";
     }
+
+
 }
