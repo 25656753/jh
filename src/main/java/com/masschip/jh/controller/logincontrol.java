@@ -23,7 +23,6 @@ public class logincontrol {
     @GetMapping("/")
     public String home(ModelMap map)
     {
-
         map.put("tt", 8548);
         System.out.println("------>"+userdao.count());
        System.out.println("---------->aaaaa"+SecurityContextHolder.getContext().getAuthentication().getPrincipal());
@@ -36,11 +35,17 @@ public class logincontrol {
         return "login/login";
     }
     @PostMapping("/login/form")
-    public String logina(String username,String password)
+    public void logina(String username,String password)
     {
         System.out.println(username+password+"-----");
-        return "login/login";
+
     }
 
+
+    @GetMapping("/logout")
+    public String loginout()
+    {
+        return "login/login";
+    }
 
 }

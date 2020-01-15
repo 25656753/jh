@@ -6,9 +6,10 @@
 </head>
 <body>
 <form action="/login/form" method="post">
-<input name="username" th:type="text"/> <br/>
-<input name="password" th:type="password"/> <br/>
-<input type="submit" value="登录"></button>
+    <input name="username" th:type="text"/> <br/>
+    <input name="password" th:type="password"/> <br/>
+    <input type="checkbox" name="remember-me" value="true"/>记住我 <br/>
+    <input type="submit" value="登录"></button>
 </form>
 </body>
 </html>
