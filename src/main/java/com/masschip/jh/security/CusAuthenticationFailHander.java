@@ -31,7 +31,7 @@ extends SimpleUrlAuthenticationFailureHandler {
         //以Json格式返回
         Map<String,String> map=new HashMap<>();
         map.put("code", "201");
-        map.put("msg", "登录失败");
+        map.put("msg", exception.getMessage());
         response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");

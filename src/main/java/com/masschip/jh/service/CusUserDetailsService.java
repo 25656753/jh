@@ -19,6 +19,9 @@ public class CusUserDetailsService
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
         List<User> data=  userdao.findByUsername(username);
+        if (data.size()>0)
         return data.get(0);
+        else
+            return null;
     }
 }
