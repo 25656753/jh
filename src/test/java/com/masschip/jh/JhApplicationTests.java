@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.util.AntPathMatcher;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -80,6 +81,17 @@ class JhApplicationTests {
           System.out.println("password ok------");
       }
     }
+
+
+    @Test
+    void antPathMatchert5()
+    {
+        AntPathMatcher antPathMatcher = new AntPathMatcher();
+        if (antPathMatcher.match("/aa/bb/**", "/aa/bb/edit"))
+            System.out.println("-------->ok");
+    }
+
+
     }
 
 

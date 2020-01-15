@@ -54,15 +54,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .tokenRepository(persistentTokenRepository())
                 .tokenValiditySeconds(60)
                 .and()
-                .authorizeRequests().anyRequest().authenticated()
+                .authorizeRequests()
+                .antMatchers("/whoim").access("@rbacService.hasPermission(request,authentication)")    //必须经过认证以后才能访问
+                .antMatchers("/whoim1").permitAll()
+                .anyRequest().authenticated()
                // .and()
            //     .authorizeRequests().anyRequest()
 //                      .antMatchers("/index").permitAll()
 //                .antMatchers("/whoim").hasRole("ADMIN")
 //                .antMatchers(HttpMethod.POST,"/user/*").hasRole("ADMIN")
 //                .antMatchers(HttpMethod.GET,"/user/*").hasRole("USER")
-            //    .access("@rbacService.hasPermission(request,authentication)")    //必须经过认证以后才能访问
 
+               // .authorizeRequests().anyRequest().authenticated()
                 .and()
                 .csrf().disable();
 
