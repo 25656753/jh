@@ -1,8 +1,8 @@
 package com.masschip.jh.enties;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
@@ -34,28 +34,31 @@ public class Role {
     @JsonIgnore
     @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinTable(name = "user_roles",
-            joinColumns = {@JoinColumn(name = "roleid", referencedColumnName = "roleid")},
+            joinColumns = {@JoinColumn(name = "roleid", referencedColumnName = "roleid", columnDefinition = "varchar(64)")},
             inverseJoinColumns = {@JoinColumn(name = "userid", referencedColumnName = "userid")})
     private Set<User> users;
 
 
-   @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
-    @JoinColumn(name = "create_by")
-   @Length(max = 64)
+    @JsonBackReference
+    @OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY,
+            mappedBy = "role")
+    private Set<Permission> permissionSet;
+
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    @JoinColumn(name = "create_by", columnDefinition = "varchar(64)")
     private User create_by;
 
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
-    @Column(name ="create_time" )
+    @Column(name = "create_time")
     @NotNull
     private Date create_time;
 
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
-    @JoinColumn(name = "update_by")
-    @Length(max = 64)
+    @JoinColumn(name = "update_by", columnDefinition = "varchar(64)")
     private User update_by;
 
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
-    @Column(name ="update_time" )
+    @Column(name = "update_time")
     private Date update_time;
 
 }

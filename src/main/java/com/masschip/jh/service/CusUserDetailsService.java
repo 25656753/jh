@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class CusUserDetailsService
@@ -18,10 +19,7 @@ public class CusUserDetailsService
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        List<User> data=  userdao.findByUsername(username);
-        if (data.size()>0)
-        return data.get(0);
-        else
-            return null;
+       Optional<User> data=  userdao.findByUsername(username);
+        return  data.orElse(null);
     }
 }

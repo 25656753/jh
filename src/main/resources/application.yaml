@@ -3,7 +3,7 @@ server:
 
 spring:
   profiles:
-    active: office
+    active: home
   datasource:
     data: classpath:data-mysql.sql
     initialization-mode: always

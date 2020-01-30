@@ -4,21 +4,15 @@ import com.masschip.jh.service.CusUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.authentication.configuration.EnableGlobalAuthentication;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
@@ -45,19 +39,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .formLogin().loginPage("/login").loginProcessingUrl("/login/form")
-                .successHandler(cusAuthenticationSuccessHandler)
-                .failureHandler(cusAuthenticationFailHander)
                 .permitAll()  //表单登录，permitAll()表示这个不需要验证 登录页面，登录失败页面
                 .and()
                 .rememberMe()
                 .rememberMeParameter("remember-me").userDetailsService(cusUserDetailsService)
                 .tokenRepository(persistentTokenRepository())
                 .tokenValiditySeconds(60)
+               /**
                 .and()
                 .authorizeRequests()
                 .antMatchers("/whoim").access("@rbacService.hasPermission(request,authentication)")    //必须经过认证以后才能访问
                 .antMatchers("/whoim1").permitAll()
                 .anyRequest().authenticated()
+                **/
                // .and()
            //     .authorizeRequests().anyRequest()
 //                      .antMatchers("/index").permitAll()
@@ -65,9 +59,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                .antMatchers(HttpMethod.POST,"/user/*").hasRole("ADMIN")
 //                .antMatchers(HttpMethod.GET,"/user/*").hasRole("USER")
 
-               // .authorizeRequests().anyRequest().authenticated()
+                .and().authorizeRequests()
+                .antMatchers("/css/**","/js/**","/images/**","/assert/**","/")
+                .permitAll()
+                .antMatchers("/tt")
+                .hasRole("admin")
                 .and()
-                .csrf().disable();
+                .authorizeRequests()
+                .anyRequest().authenticated()
+                .and()
+
+                .csrf().disable()
+                .exceptionHandling().accessDeniedPage("/Access_Denied");
 
     }
 

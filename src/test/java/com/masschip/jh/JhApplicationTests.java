@@ -1,7 +1,10 @@
 package com.masschip.jh;
 
+import com.masschip.jh.dao.Menudao;
 import com.masschip.jh.dao.Roledao;
 import com.masschip.jh.dao.Userdao;
+import com.masschip.jh.enties.Menu;
+import com.masschip.jh.enties.Permission;
 import com.masschip.jh.enties.Role;
 import com.masschip.jh.enties.User;
 import org.junit.jupiter.api.Test;
@@ -10,10 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.util.AntPathMatcher;
 
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @SpringBootTest
 class JhApplicationTests {
@@ -64,12 +64,7 @@ class JhApplicationTests {
     }
 
 
-    @Test
-    void t3() {
-        List<User> t=  userdao.findByUsername("jamhe");
-        Set<Role> roles=t.get(0).getRoles();
-        System.out.println(roles.stream().findFirst().get().getRolename()+"=====");
-    }
+
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
     @Test
@@ -89,6 +84,17 @@ class JhApplicationTests {
         AntPathMatcher antPathMatcher = new AntPathMatcher();
         if (antPathMatcher.match("/aa/bb/**", "/aa/bb/edit"))
             System.out.println("-------->ok");
+    }
+   @Autowired
+private Menudao menudao;
+    @Test
+    void t6()
+    {
+       Optional<Menu> menu= menudao.findBymenuid("1");
+    for(Permission i: menu.orElse(new Menu()).getPermissionSet())
+    {
+        System.out.println("------------permisson------->"+i.getPermissname());
+    }
     }
 
 

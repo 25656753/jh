@@ -1,11 +1,10 @@
 package com.masschip.jh.enties;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.security.core.GrantedAuthority;
@@ -13,8 +12,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.security.Timestamp;
 import java.util.ArrayList;
@@ -50,6 +47,14 @@ public class User implements UserDetails {
             inverseJoinColumns = {@JoinColumn(name="roleid",referencedColumnName ="roleid" ) })
     private Set<Role> roles;
 
+
+    @JsonBackReference
+    @OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY,
+            mappedBy = "user")
+    private Set<Permission> permissionSet;
+
+
+
     @Length(max = 28)
     private String email;
     @Length(max = 20)
@@ -59,8 +64,7 @@ public class User implements UserDetails {
     private String ps;
     private Boolean issuper=false;
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
-    @JoinColumn(name = "create_by")
-    @Length(max = 64)
+    @JoinColumn(name = "create_by",columnDefinition = "varchar(64)")
     private User create_by;
 
     @JsonFormat(pattern="yyyy-MM-dd",timezone="GMT+8")
@@ -69,8 +73,7 @@ public class User implements UserDetails {
     private Date create_time;
 
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
-    @JoinColumn(name = "update_by")
-    @Length(max = 64)
+    @JoinColumn(name = "update_by",columnDefinition = "varchar(64)")
     private User update_by;
 
     @JsonFormat(pattern="yyyy-MM-dd",timezone="GMT+8")
