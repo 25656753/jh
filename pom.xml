@@ -63,6 +63,14 @@
             <artifactId>spring-security-test</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <!--  thymeleaf springsecurity5 html支持 -->
+        <dependency>
+            <groupId>org.thymeleaf.extras</groupId>
+            <artifactId>thymeleaf-extras-springsecurity5</artifactId>
+        </dependency>
+
+
         <!--  druid线程池  -->
         <dependency>
             <groupId>com.alibaba</groupId>
