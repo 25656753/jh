@@ -8,6 +8,6 @@ spring:
     data: classpath:data-mysql.sql
     initialization-mode: always
   thymeleaf:
-    mode: LEGACYHTML5
+    mode: HTML
     cache: false
     encoding: UTF-8

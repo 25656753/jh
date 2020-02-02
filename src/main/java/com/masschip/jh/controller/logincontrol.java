@@ -2,13 +2,16 @@ package com.masschip.jh.controller;
 
 import com.masschip.jh.dao.Roledao;
 import com.masschip.jh.dao.Userdao;
+import org.apache.catalina.security.SecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.security.RolesAllowed;
 
@@ -36,6 +39,13 @@ public class logincontrol {
         return "login/login";
     }
 
+    @RequestMapping("/loginfail")
+    public String loginfail(ModelAndView modelAndView) {
+        System.out.println("-------------loginfail");
+        return "login/login";
+    }
+
+
     @GetMapping("/login/form")
     public String logina(String username, String password) {
         System.out.println("Access_Denied------>" + username + "---" + password);
@@ -51,6 +61,7 @@ public class logincontrol {
 
     @GetMapping("/logout")
     public String loginout() {
+        SecurityContextHolder.clearContext();
         return "login/login";
     }
 

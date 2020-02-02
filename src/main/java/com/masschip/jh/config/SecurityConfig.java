@@ -15,8 +15,12 @@ import org.springframework.security.web.authentication.AuthenticationFailureHand
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.security.web.util.matcher.RequestMatcher;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.sql.DataSource;
+import java.util.regex.Pattern;
 
 @Configuration
 @EnableWebSecurity
@@ -37,41 +41,64 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
-                .formLogin().loginPage("/login").loginProcessingUrl("/login/form")
-                .permitAll()  //表单登录，permitAll()表示这个不需要验证 登录页面，登录失败页面
-                .and()
-                .rememberMe()
+        /**
+         * 允许登录页面无需登陆
+         * 允许静态文件，脚本无需登陆
+         */
+        http.formLogin().loginPage("/login").loginProcessingUrl("/login/form")
+                .failureForwardUrl("/lgoinfail")
+                .permitAll()
+                .and().logout()//自定义登出
+                .logoutUrl("/logout") //自定义登出api，无需自己实现
+                .logoutSuccessUrl("/login")
+                .permitAll()
+                .and().authorizeRequests()
+                .antMatchers("/css/**","/js/**","/loginfail",
+                        "/images/**","/assert/**","/fonts/**","/","/logout")
+                .permitAll();
+        /**
+         * 开启记住我
+         */
+        http.rememberMe()
                 .rememberMeParameter("remember-me").userDetailsService(cusUserDetailsService)
                 .tokenRepository(persistentTokenRepository())
-                .tokenValiditySeconds(60)
-               /**
-                .and()
-                .authorizeRequests()
-                .antMatchers("/whoim").access("@rbacService.hasPermission(request,authentication)")    //必须经过认证以后才能访问
-                .antMatchers("/whoim1").permitAll()
-                .anyRequest().authenticated()
-                **/
-               // .and()
-           //     .authorizeRequests().anyRequest()
-//                      .antMatchers("/index").permitAll()
-//                .antMatchers("/whoim").hasRole("ADMIN")
-//                .antMatchers(HttpMethod.POST,"/user/*").hasRole("ADMIN")
-//                .antMatchers(HttpMethod.GET,"/user/*").hasRole("USER")
+                .tokenValiditySeconds(60);
 
-                .and().authorizeRequests()
-                .antMatchers("/css/**","/js/**","/images/**","/assert/**","/")
-                .permitAll()
-                .antMatchers("/tt")
-                .hasRole("admin")
-                .and()
-                .authorizeRequests()
-                .anyRequest().authenticated()
-                .and()
+        /**
+         * 其它资源需登陆和RBAC授权访问
+         */
+        http.authorizeRequests().antMatchers("/**").access("@rbacService.hasPermission(request,authentication)")    //必须经过认证以后才能访问
+                .and().exceptionHandling().accessDeniedPage("/Access_Denied");
 
-                .csrf().disable()
-                .exceptionHandling().accessDeniedPage("/Access_Denied");
 
+        http.authorizeRequests().anyRequest().authenticated();
+
+
+
+
+        /**
+         * 关闭csft
+         */
+      //  http.csrf().disable();
+
+        /**
+         * 前端js可操作的cookie XSRF-TOKEN
+         */
+       /* http.csrf()
+                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+                .requireCsrfProtectionMatcher(new RequestMatcher() {
+
+                    private Pattern allowmethod=Pattern
+                            .compile("^(GET|HEAD|TRACE|OPTIONS)$");
+                    @Override
+                    public boolean matches(HttpServletRequest httpServletRequest) {
+                        if (httpServletRequest.getServletPath().contains("/login")) {
+                            return false;
+                        }
+                        return !allowmethod.matcher(httpServletRequest.getMethod()).matches();
+                    }
+                });
+*/
     }
 
 

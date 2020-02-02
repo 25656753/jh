@@ -1,10 +1,20 @@
 <!DOCTYPE html>
-<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="share/layout">>
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
-<p>ttt</p>
+<div th:fragment="mainbody" >
+<p>tt Page</p>
+</div>
+
+<script  type="text/javascript" th:inline="javascript" th:fragment="js">
+
+
+
+
+</script>
 </body>
 </html>

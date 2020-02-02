@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>中科芯海智能科技有限公司 - 临床诊断与生命科学领域仪器设备研发制造商 - masschip</title>
+    <meta name="keywords" content="中科芯海智能科技有限公司,中科芯海,芯海白细胞计数仪,白细胞计数仪,芯海白细胞分析仪,白细胞分析仪"/>
+    <meta name="description" content="中科芯海智能科技有限公司 -  临床诊断与生命科学领域仪器设备研发制造商 - masschip"/>
+    <meta name="author" content="中科芯海智能科技有限公司,中科芯海,芯海白细胞计数仪,白细胞计数仪,芯海白细胞分析仪,白细胞分析仪"/>
+    <link rel="icon" type="image/x-icon" href="/static/images/companylogo.jpg">
+    <link rel="stylesheet" th:href="@{/js/layui/css/layui.css}">
+
+<!--
+<style>
+    html,body{
+        margin: 0px;
+        padding: 0px;
+        height: 100%;
+        border: none;
+    }
+.layui-fluid{
+    height: 100%;
+}
+    .mainbody{
+        min-height: calc(100vh - 180px);
+        padding:0px;
+        background: #85001F;
+    }
+    header {
+        height: 120px;
+        background: #0000FF;
+    }
+    footer{
+        height: 60px;
+        background: #4476A7;
+    }
+</style>
+-->
+
+</head>
+
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">layui 后台布局</div>
+        <!-- 头部区域（可配合layui已有的水平导航） -->
+        <ul class="layui-nav layui-layout-left">
+            <li class="layui-nav-item"><a href="">控制台</a></li>
+            <li class="layui-nav-item"><a href="">商品管理</a></li>
+            <li class="layui-nav-item"><a href="">用户</a></li>
+            <li class="layui-nav-item">
+                <a href="javascript:;">其它系统</a>
+                <dl class="layui-nav-child">
+                    <dd><a href="">邮件管理</a></dd>
+                    <dd><a href="">消息管理</a></dd>
+                    <dd><a href="">授权管理</a></dd>
+                </dl>
+            </li>
+        </ul>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <a href="javascript:;">
+                    <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
+                    贤心
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a href="">基本资料</a></dd>
+                    <dd><a href="">安全设置</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item"><a href="">退了</a></li>
+        </ul>
+    </div>
+
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a class="" href="javascript:;">所有商品</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;">列表一</a></dd>
+                        <dd><a href="javascript:;">列表二</a></dd>
+                        <dd><a href="javascript:;">列表三</a></dd>
+                        <dd><a href="">超链接</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;">解决方案</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;">列表一</a></dd>
+                        <dd><a href="javascript:;">列表二</a></dd>
+                        <dd><a href="">超链接</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item"><a href="">云市场</a></li>
+                <li class="layui-nav-item"><a href="">发布商品</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <div th:replace="::mainbody"></div>
+    </div>
+
+    <div class="layui-footer">
+        <!-- 底部固定区域 -->
+        © layui.com - 底部固定区域
+    </div>
+</div>
+
+
+<!--引入组件库 layui js-->
+<script th:src="@{/js/layui/layui.js}"></script>
+
+
+<script type="text/javascript" th:inline="javascript">
+
+    layui.config({
+        base: '/js/modules/' //你存放新模块的目录，注意，不是layui的模块目录
+    }).use('index'); //加载入口
+
+
+</script>
+
+
+
+<script type="text/css" th:replace="::js"></script>
+
+</body>
+</html>
