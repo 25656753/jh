@@ -74,7 +74,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().anyRequest().authenticated();
 
 
-
+        http.csrf()
+                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
 
         /**
          * 关闭csft
@@ -109,9 +110,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
 
+
      /**
      * 开启注解spring security需要引出的Bean
-     * @return
+     * @return 引出认证管理器
      * @throws Exception
      */
     @Bean

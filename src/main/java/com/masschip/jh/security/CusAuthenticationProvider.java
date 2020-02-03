@@ -3,12 +3,15 @@ package com.masschip.jh.security;
 import com.masschip.jh.enties.User;
 import com.masschip.jh.service.CusUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -46,5 +49,32 @@ public class CusAuthenticationProvider
     @Override
     public boolean supports(Class<?> aClass) {
         return true;
+    }
+
+
+
+
+    /**
+     * 登陆与授权.
+     *  此段代码目前暂时没用，用于自定义认证和和返回js调用可用的token
+     * @param username .
+     * @param password .
+     * @return
+     */
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
+    private String generateToken(String username, String password) {
+        UsernamePasswordAuthenticationToken upToken = new UsernamePasswordAuthenticationToken(username, password);
+        // Perform the security
+        final Authentication authentication = authenticationManager.authenticate(upToken);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        // Reload password post-security so we can generate token
+        final UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+        // 持久化的redis
+        String token="";
+       // String token = CommonUtils.encrypt(userDetails.getUsername());
+      //  redisTemplate.opsForValue().set(token, userDetails.getUsername());
+        return token;
     }
 }
