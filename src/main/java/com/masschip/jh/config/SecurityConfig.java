@@ -47,7 +47,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
          */
         http.formLogin().loginPage("/login").loginProcessingUrl("/login/form")
                 //.failureUrl("/loginfail")
-                //.failureForwardUrl("/loginfail")
                 .permitAll()
                 .and().logout()//自定义登出
                 .invalidateHttpSession(true)
