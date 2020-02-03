@@ -45,11 +45,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
          * 允许登录页面无需登陆
          * 允许静态文件，脚本无需登陆
          */
-        http.formLogin().loginPage("/login").loginProcessingUrl("/login/form")
+        http.formLogin().loginPage("/login")
                 //.failureUrl("/loginfail")
                 .permitAll()
                 .and().logout()//自定义登出
                 .invalidateHttpSession(true)
+                .deleteCookies("XSRF-TOKEN")
                 .logoutUrl("/logout") //自定义登出api，无需自己实现
                 .logoutSuccessUrl("/login")
                 .permitAll()

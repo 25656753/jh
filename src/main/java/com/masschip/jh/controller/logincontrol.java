@@ -45,19 +45,6 @@ public class logincontrol {
         return "login/login";
     }
 
-    @RequestMapping("/loginfail")
-    public String loginfail(ModelAndView modelAndView) {
-        System.out.println("-------------loginfail");
-        modelAndView.addObject("error","ffff");
-        return "login/login";
-    }
-
-
-  /*  @GetMapping("/login/form")
-    public String logina(String username, String password) {
-        System.out.println("Access_Denied------>" + username + "---" + password);
-        return "login/aa";
-    }*/
 
     @GetMapping("/Access_Denied")
     public String AccessDenied(String username, String password) {
@@ -69,7 +56,7 @@ public class logincontrol {
     @GetMapping("/logout")
     public String loginout() {
         SecurityContextHolder.clearContext();
-        return "login/login";
+        return "redirect:/login";
     }
 
 
