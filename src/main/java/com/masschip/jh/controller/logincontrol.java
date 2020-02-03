@@ -2,6 +2,7 @@ package com.masschip.jh.controller;
 
 import com.masschip.jh.dao.Roledao;
 import com.masschip.jh.dao.Userdao;
+import com.masschip.jh.utils.MessageUtils;
 import org.apache.catalina.security.SecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -25,13 +26,15 @@ public class logincontrol {
 
     @Autowired
     private Userdao userdao;
-
+    @Autowired
+private MessageUtils messageUtils;
     @Autowired
     private Roledao roledao;
 
     @GetMapping("/")
     public String home(ModelMap map) {
         map.put("tt", 8548);
+        System.out.println("------>" + messageUtils.get("welcome"));
         System.out.println("------>" + userdao.count());
         System.out.println("---------->aaaaa" + SecurityContextHolder.getContext().getAuthentication().getPrincipal());
         return "index";

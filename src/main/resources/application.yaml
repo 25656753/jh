@@ -11,3 +11,5 @@ spring:
     mode: HTML
     cache: false
     encoding: UTF-8
+  messages:
+    basename: static/i18n/messages #指定国际化文件路径
