@@ -46,9 +46,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
          * 允许静态文件，脚本无需登陆
          */
         http.formLogin().loginPage("/login").loginProcessingUrl("/login/form")
-                .failureForwardUrl("/lgoinfail")
+                //.failureUrl("/loginfail")
+                //.failureForwardUrl("/loginfail")
                 .permitAll()
                 .and().logout()//自定义登出
+                .invalidateHttpSession(true)
                 .logoutUrl("/logout") //自定义登出api，无需自己实现
                 .logoutSuccessUrl("/login")
                 .permitAll()

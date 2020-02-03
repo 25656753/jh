@@ -27,7 +27,7 @@ public class logincontrol {
     @Autowired
     private Userdao userdao;
     @Autowired
-private MessageUtils messageUtils;
+    private MessageUtils messageUtils;
     @Autowired
     private Roledao roledao;
 
@@ -40,7 +40,7 @@ private MessageUtils messageUtils;
         return "index";
     }
 
-    @GetMapping("/login")
+    @RequestMapping("/login")
     public String login() {
         return "login/login";
     }
@@ -48,15 +48,16 @@ private MessageUtils messageUtils;
     @RequestMapping("/loginfail")
     public String loginfail(ModelAndView modelAndView) {
         System.out.println("-------------loginfail");
+        modelAndView.addObject("error","ffff");
         return "login/login";
     }
 
 
-    @GetMapping("/login/form")
+  /*  @GetMapping("/login/form")
     public String logina(String username, String password) {
         System.out.println("Access_Denied------>" + username + "---" + password);
         return "login/aa";
-    }
+    }*/
 
     @GetMapping("/Access_Denied")
     public String AccessDenied(String username, String password) {
@@ -73,7 +74,7 @@ private MessageUtils messageUtils;
 
 
     @GetMapping("/tt")
-   // @RolesAllowed("USER")
+    // @RolesAllowed("USER")
     public String tta() {
         return "tt";
     }
@@ -83,7 +84,7 @@ private MessageUtils messageUtils;
     public String tt() {
         Authentication au = SecurityContextHolder.getContext().getAuthentication();
 
-        System.out.println("token-----"+ SecurityContextHolder.getContext().getAuthentication().getDetails().toString());
+        System.out.println("token-----" + SecurityContextHolder.getContext().getAuthentication().getDetails().toString());
         return "aaaa";
     }
 

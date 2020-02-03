@@ -5,6 +5,9 @@
     <title>Title</title>
 </head>
 <body>
+<div th:if="${param.error}">
+    <p>用户名或密码无效</p>
+</div>
 <form action="/login/form" method="post">
 
     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
