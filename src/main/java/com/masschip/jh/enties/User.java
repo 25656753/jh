@@ -63,9 +63,12 @@ public class User implements UserDetails {
     @Length(max = 500)
     private String ps;
     private Boolean issuper=false;
+
+    @JsonIgnore
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinColumn(name = "create_by",columnDefinition = "varchar(64)")
     private User create_by;
+
 
     @JsonFormat(pattern="yyyy-MM-dd",timezone="GMT+8")
     @Column(name ="create_time" )

@@ -16,14 +16,12 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
-import org.springframework.security.web.util.matcher.RequestMatcher;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.sql.DataSource;
-import java.util.regex.Pattern;
 
 @Configuration
 @EnableWebSecurity
+/*允许使用springsecurity注解*/
 @EnableGlobalMethodSecurity(prePostEnabled = true,securedEnabled=true,jsr250Enabled=true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -55,7 +53,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutSuccessUrl("/login")
                 .permitAll()
                 .and().authorizeRequests()
-                .antMatchers("/css/**","/js/**","/loginfail",
+                .antMatchers("/css/**","/js/**","/loginfail","/g1",
                         "/images/**","/assert/**","/fonts/**","/","/logout")
                 .permitAll();
         /**
@@ -75,14 +73,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests().anyRequest().authenticated();
 
+/*        显式地设置cookieHttpOnly=false. 这是必要的,允许JavaScript(例如AngularJS)读取它
+        名为 XSRF-TOKEN的cookie和从头部命名 X-XSRF-TOKEN中读取或HTTP参数 _csrf*/
 
-        http.csrf()
-                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
+         http.csrf()
+        .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
 
         /**
          * 关闭csft
          */
-      //  http.csrf().disable();
+       // http.csrf().disable();
 
         /**
          * 前端js可操作的cookie XSRF-TOKEN

@@ -13,7 +13,7 @@ spring:
       ddl-auto: update
     show-sql: true
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
-    open-in_view: true
+    open-in_view: true   #此属性将注册一个OpenEntityManagerInViewInterceptor,它将EntityManager注册到当前线程,因此在Web请求完成之前,您将拥有相同的EntityManager.它与Hibernate SessionFactory等无关
     properties:
       hibernate:
         enable_lazy_load_no_trans: true
