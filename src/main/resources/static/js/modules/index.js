@@ -7,7 +7,8 @@ layui.define(['layer', 'form','element'], function(exports){
         ,form = layui.form
         ,element = layui.element;
 
+    //do something
 
     //注意，这里是模块输出的核心，模块名必须和use时的模块名一致
-    exports('index', {});
+    exports('index',{});
 });

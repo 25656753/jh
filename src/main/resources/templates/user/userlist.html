@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="share/layout">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:fragment="mainbody">
+    <div class="container">
+    <div class="layui-row ">
+        <div class="layui-col-md4 layui-bg-blue  layui-col-md-offset1 ">A</div>
+        <div class="layui-col-md2 layui-bg-gray layui-col-space2 ">B</div>
+        <div class="layui-col-md2 layui-bg-blue layui-col-space2">C</div>
+        <div class="layui-col-md2 layui-bg-black ">D</div>
+    </div>
+    </div>
+</div>
+<style  type="text/css"  th:fragment="css">
+
+</style>
+<script type="text/javascript" th:inline="javascript" th:fragment="js">
+</script>
+</body>
+</html>

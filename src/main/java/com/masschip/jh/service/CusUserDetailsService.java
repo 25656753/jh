@@ -49,4 +49,14 @@ public class CusUserDetailsService
         return  permissionSet;
     }
 
+    /**
+     *
+     * @return 全部用户
+     */
+    public  List<User> getalluser()
+    {
+        return userdao.findAll();
+    }
+
+
 }

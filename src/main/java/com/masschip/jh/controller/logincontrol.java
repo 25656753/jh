@@ -3,21 +3,14 @@ package com.masschip.jh.controller;
 import com.masschip.jh.dao.Roledao;
 import com.masschip.jh.dao.Userdao;
 import com.masschip.jh.utils.MessageUtils;
-import org.apache.catalina.security.SecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
-
-import javax.annotation.security.RolesAllowed;
-
-import javax.annotation.PostConstruct;
 
 //https://blog.csdn.net/weixin_41722928/article/details/102817307
 //https://blog.csdn.net/nb7474/article/details/88696205

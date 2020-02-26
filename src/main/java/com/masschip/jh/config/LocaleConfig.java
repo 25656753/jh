@@ -13,6 +13,8 @@ import java.util.Locale;
 
 /**
  * 配置国际化语言
+ * 通过拦截器查询请求是否带有lang参数，如果有，刚设定locale为lang参数指定的语言，如果没
+ * 有，刚为默认值Locale.US
  */
 @Configuration
 public class LocaleConfig {
