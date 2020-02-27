@@ -10,7 +10,33 @@
 <div th:fragment="mainbody">
     <div class="container">
     <div class="layui-row">
-       <h1>欢迎使用系统！</h1>
+       <h1 class="layui-bg-blue color-bar">欢迎使用系统！</h1>
+        <div class="layui-card">
+            <div class="layui-card-header">卡片面板</div>
+            <div class="layui-card-body">
+                卡片式面板面板通常用于非白色背景色的主体内<br>
+                从而映衬出边框投影
+            </div>
+        </div>
+        <i class="layui-icon layui-icon-friends layui-anim layui-anim-uplayui-anim-scale" style="font-size: 30px; color: #1E9FFF;"></i>
+    <span class="layui-breadcrumb" lay-separator="|">
+        <a>aa</a>
+        <a>bb</a>
+        <c>cc</c>
+
+    </span>
+        <button class="layui-btn layui-btn-danger" onclick="t1()">点击</button>
+
+        <div class="layui-form" lay-filter="test2" lay-verType="alert">
+            <input type="text" lay-verify="email"/>
+            <input type="text" lay-verify="number" />
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button id="rr" class="layui-btn" lay-submit lay-filter="*">立即提交</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+            </div>
+        </div>
     </div>
     </div>
 </div>
@@ -18,6 +44,20 @@
 
 </style>
 <script type="text/javascript" th:inline="javascript" th:fragment="js">
+
+    function t1() {
+        var $=layui.$
+
+        $("#rr").hide();
+
+    //    layer.close(index);
+   // layer.open({
+   //    type:0,
+   //     title:"通知",
+   //     content:"<h1>请等待</h1>",
+   //     skin:"layui-layer-lan",
+   // });
+    }
 </script>
 </body>
 </html>

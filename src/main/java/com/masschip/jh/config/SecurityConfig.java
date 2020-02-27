@@ -53,7 +53,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutSuccessUrl("/login")
                 .permitAll()
                 .and().authorizeRequests()
-                .antMatchers("/css/**","/js/**","/loginfail","/g1",
+                .antMatchers("/css/**","/js/**","/loginfail","/g1","/g3",
                         "/images/**","/assert/**","/fonts/**","/","/logout")
                 .permitAll();
         /**

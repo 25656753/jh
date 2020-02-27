@@ -6,6 +6,7 @@ layui.define(['layer', 'form','element'], function(exports){
     var layer = layui.layer
         ,form = layui.form
         ,element = layui.element;
+      //  ,$ = layui.$; //由于layer弹层依赖jQuery，所以可以直接得到
 
     //do something
 

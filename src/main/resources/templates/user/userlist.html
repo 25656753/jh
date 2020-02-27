@@ -8,50 +8,97 @@
 </head>
 <body>
 <div th:fragment="mainbody">
-    <div class="container">
-        <table lay-filter="demo">
+
+        <table style="visibility: hidden;"  lay-ver lay-filter="demo">
             <thead>
             <tr>
-                <th lay-data="{field:'userid', width:350,unresize:true}">用户ID</th>
-                <th lay-data="{field:'username', width:200}">用户名称</th>
-                <th lay-data="{field:'create_time', width:300, sort:true}">性别</th>
-                <th lay-data="{field:'issuper',width:100,type:'checkbox'}">管理员</th>
-                <th lay-data="{field:'email'}">签名</th>
+                <th lay-data="{field:'userid', width:350,align:'center',}">用户ID</th>
+                <th lay-data="{field:'username',align:'center', width:200,}">用户名称</th>
+                <th lay-data="{field:'create_time', width:200, sort:true}">加入时间</th>
+                <th lay-data="{field:'issuper',width:100}">用户属性</th>
+                <th lay-data="{field:'email',width:150}">电子邮件</th>
+                <th lay-data="{ align:'center', toolbar: '#barDemo'}">操作</th>
             </tr>
             </thead>
-            <tbody>
+            <tbody >
              <tr th:each="i:${data}">
                  <td th:text="${i.userid}"></td>
                  <td th:text="${i.username}"></td>
                  <td th:text="${#dates.format(i.create_time,'yyyy-MM-dd HH:mm')}"></td>
-                 <td th:text="${i.issuper}"></td>
+                 <td th:text="${i.issuper?'管理员':'普通用户'}"></td>
                  <td th:text="${i.email}"></td>
+                 <td></td>
              </tr>
 
             </tbody>
         </table>
 
 
-    </div>
+
+
+    <script type="text/html" id="barDemo">
+        <a class="layui-btn layui-btn-xs" lay-event="detail">查看</a>
+        <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+
+        <!-- 这里同样支持 laytpl 语法，如： -->
+        {{#  if(d.username=="root"){ }}
+        <a class="layui-btn layui-btn-xs" lay-event="check">审核</a>
+        {{#  } }}
+    </script>
+
 </div>
 <style  type="text/css"  th:fragment="css">
 
+    .layui-laypage .layui-laypage-curr .layui-laypage-em {
+        background: #007DDB;
+    }
 </style>
 <script type="text/javascript" th:inline="javascript" th:fragment="js">
 
     layui.use(['table'],function () {
         var table = layui.table;
-
+      var t  =layer.load("加载中。。。");
         //转换静态表格
         table.init('demo', {
+            skin:'line',
             page:true,
-            limit:1,
-            limits:[2,4],
+            limit:10,
+            limits:[10,15],
             title:"人员列表",
+            toolbar:"<h2>人员列表</h2>",
+            totalRow:true,
+            id:"userid",
+            done:function (res, curr, count) {
+              //加载完回调
+                //alert("ok");
+                console.log(res);
+
+                //得到当前页码
+                console.log(curr);
+
+                //得到数据总量
+                console.log(count);
+                var $=layui.$;
+
+                $(this).show();
+                layer.close(t);
+            }
           //  height: 315 //设置高度
          //   , limit: 1 //注意：请务必确保 limit 参数（默认：10）是与你服务端限定的数据条数一致
             //支持所有基础参数
         });
+
+        table.on('tool(demo)',function (obj) {
+            var data = obj.data; //获得当前行数据
+            var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+            var tr = obj.tr; //获得当前行 tr 的 DOM 对象（如果有的话）
+
+            if(layEvent === 'detail') { //查看
+             alert(data.username);
+            }
+        });
+
     });
 </script>
 </body>
