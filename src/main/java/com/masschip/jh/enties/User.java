@@ -12,6 +12,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.security.Timestamp;
 import java.util.ArrayList;
@@ -31,11 +32,13 @@ public class User implements UserDetails {
     private String userid;
     @Column(nullable = false)
     @Length(max = 64)
+    @NotEmpty
     private String username;
     @Length(max = 64)
     private String password;
     @Column(nullable = false)
     @Length(max = 64)
+    @NotEmpty
     private String nickname;
 
     private boolean enabled=true;

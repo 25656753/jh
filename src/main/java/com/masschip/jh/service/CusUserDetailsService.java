@@ -58,5 +58,8 @@ public class CusUserDetailsService
         return userdao.findAll();
     }
 
+    public Optional<User> getuserbyid(String userid){
+        return  userdao.findById(userid);
+    }
 
 }
