@@ -53,12 +53,15 @@ public class UserController {
     @RequestMapping(value = {"addnew","useredit", "useredit/{id}"},
     method = {RequestMethod.POST,RequestMethod.GET})
     public String useredit(
-             @Valid @ModelAttribute("user") User user
+             @Valid @ModelAttribute("data") User user
             , BindingResult result
             ,@PathVariable(value = "id", required = false) String userid
             , HttpServletRequest request
             ,ModelMap map) {
         User  cuser=new User();
+
+       // HttpServletRequest a;
+
         if ("GET".equalsIgnoreCase(request.getMethod())) {
             if (userid == null)   //新增
             {
@@ -67,14 +70,16 @@ public class UserController {
             {
              cuser=userservice.getuserbyid(userid).get();
             }
-          map.put("user", cuser);
+          map.put("data", cuser);
+            map.put("aa","123");
+            map.put("allFeatures",new Boolean[]{true,false,true});
             return "user/useredit";
         } else    //保存user对象
             {
 
                 if (result.hasErrors())
                 {
-                    map.put("user", user);
+                    map.put("data", user);
                     return "user/useredit";
                 }
            // System.out.println(user.getEmail()+"---"+user.getUsername());
