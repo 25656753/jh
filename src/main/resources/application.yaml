@@ -3,7 +3,7 @@ server:
 
 spring:
   profiles:
-    active: home
+    active: office
   datasource:
     data: classpath:data-mysql.sql
     initialization-mode: always
@@ -13,3 +13,15 @@ spring:
     encoding: UTF-8
   messages:
     basename: static/i18n/messages #指定国际化文件路径
+  redis:
+    database: 0
+    host: 192.168.3.65
+    port: 6379
+    password:
+    timeout: 1000
+    jedis:
+      pool:
+        max-active: 8
+        max-wait: -1
+        max-idle: 10
+        min-idle: 0

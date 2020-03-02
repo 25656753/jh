@@ -37,7 +37,28 @@
             </div>
         </div>
 
+        <div class="layui-form-item">
+            <label class="layui-form-label">角色:</label>
+            <div class="layui-input-inline">
+                <input type="text" name="roles" required lay-verify="required" placeholder="请输入姓名"
+                       th:field="*{roles}"  autocomplete="off" class="layui-input">
 
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">角色</label>
+            <div class="layui-input-block">
+               <ul th:each="i:${allrole}">
+                   <li>
+                       <input type="checkbox"  th:checked="${#lists.contains(data.roles,i)}?checked:false"
+                              th:title="${i.rolename}"/>
+
+                   </li>
+               </ul>
+            </div>
+        </div>
 
 
 
