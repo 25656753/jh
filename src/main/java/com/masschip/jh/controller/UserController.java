@@ -4,6 +4,7 @@ import com.masschip.jh.dao.Roledao;
 import com.masschip.jh.enties.User;
 import com.masschip.jh.service.CusUserDetailsService;
 import com.masschip.jh.utils.RedisUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,21 +19,17 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("/xinhai")
+@Slf4j
 public class UserController {
 
     @Autowired
     private CusUserDetailsService userservice;
     @Autowired
     private Roledao roledao;
-    @Autowired
-    private RedisUtil redisUtil;
 
     @GetMapping("/")
     public String xinhairoot() {
-       User u=new User();
-       u.setUsername("dss");
-        redisUtil.set("bbb", u);
-      System.out.println("redis--->"+ redisUtil.get("bbb"));
+
         return "xinhairoot";
     }
 

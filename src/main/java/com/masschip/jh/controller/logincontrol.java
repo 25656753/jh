@@ -2,8 +2,15 @@ package com.masschip.jh.controller;
 
 import com.masschip.jh.dao.Roledao;
 import com.masschip.jh.dao.Userdao;
+import com.masschip.jh.enties.Role;
 import com.masschip.jh.utils.MessageUtils;
+import com.masschip.jh.utils.RedisUtil;
+import lombok.extern.flogger.Flogger;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -12,9 +19,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
+import java.util.List;
+
 //https://blog.csdn.net/weixin_41722928/article/details/102817307
 //https://blog.csdn.net/nb7474/article/details/88696205
 @Controller
+@Slf4j
 public class logincontrol {
 
     @Autowired
@@ -23,11 +34,31 @@ public class logincontrol {
     private MessageUtils messageUtils;
     @Autowired
     private Roledao roledao;
+    @Autowired
+    private RedisUtil redisUtil;
 
+private Logger logger= LoggerFactory.getLogger(getClass());
     @GetMapping("/")
-    public String home(ModelMap map) {
+    @Cacheable(cacheNames = "mycaa",key = "#id")
+    public String home(int id,ModelMap map) {
+System.out.println("count====="+redisUtil.keys("*").size());
         map.put("tt", 8548);
-        System.out.println("------>" + messageUtils.get("welcome"));
+        Role f=new Role();
+        f.setRolename("dsds");
+        f.setPs("dasdad");
+
+        List<Role>  pp=new ArrayList<>();
+        pp.add(f);
+        String bb=f.getRolename();
+        map.put("bb",bb);
+        map.put("ppsd",pp);
+        redisUtil.set("role", f);
+        redisUtil.lSet("gg", pp);
+       map.put("role", (Role)redisUtil.get("role"));
+        System.out.println("---redis"+redisUtil.lGet("gg", 1, 1));
+         logger.debug("----------aaaaaa333fdfddf");
+
+         System.out.println("------>" + messageUtils.get("welcome"));
         System.out.println("------>" + userdao.count());
         System.out.println("---------->aaaaa" + SecurityContextHolder.getContext().getAuthentication().getPrincipal());
         return "index";

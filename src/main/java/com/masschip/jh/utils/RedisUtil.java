@@ -22,6 +22,18 @@ public final class RedisUtil {
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
 
+    /**
+     *
+     * @param key   *查找全部key
+     * @return
+     */
+    public Set<?> keys(String key)
+    {
+        return redisTemplate.keys(key);
+    }
+
+
+
     // =============================common============================
 
     /**
