@@ -3,14 +3,13 @@ package com.masschip.jh.controller;
 import com.masschip.jh.dao.Roledao;
 import com.masschip.jh.dao.Userdao;
 import com.masschip.jh.enties.Role;
+import com.masschip.jh.service.Roleservice;
 import com.masschip.jh.utils.MessageUtils;
 import com.masschip.jh.utils.RedisUtil;
-import lombok.extern.flogger.Flogger;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -37,12 +36,16 @@ public class logincontrol {
     @Autowired
     private RedisUtil redisUtil;
 
+    @Autowired
+    private Roleservice roleservice;
+
 private Logger logger= LoggerFactory.getLogger(getClass());
     @GetMapping("/")
-    @Cacheable(cacheNames = "mycaa",key = "#id")
-    public String home(int id,ModelMap map) {
+    public String home(ModelMap map) {
+        List<Role> roles = roleservice.getallroles();
 System.out.println("count====="+redisUtil.keys("*").size());
         map.put("tt", 8548);
+        map.put("vv", roles);
         Role f=new Role();
         f.setRolename("dsds");
         f.setPs("dasdad");

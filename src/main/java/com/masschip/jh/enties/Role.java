@@ -11,13 +11,15 @@ import org.hibernate.validator.constraints.Length;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 
 @Getter
 @Setter
 @Entity
-public class Role {
+public class Role implements Serializable {
+    private static final long serialVersionUID = 1000091L;
     @Id
     @GeneratedValue(generator = "uuidgenerator")
     @GenericGenerator(name = "uuidgenerator", strategy = "uuid")
